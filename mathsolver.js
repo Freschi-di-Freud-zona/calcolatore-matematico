@@ -4,15 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const boxContents = document.querySelector('.boxqui .box-contents');
     const placeholder = document.querySelector('.faiqui');
 
-
-
-    Object.entries(constants).forEach(([key, value]) => {
-        math.evaluate(`${key} = ${value}`);
-    });
-
-    catch (error) {
-            console.error("Errore durante la risoluzione:", error);
-            return "Errore: Input non valido o funzione non riconosciuta";
+    function solveMathProblem(problem) {
+        try {
+            // Utilizziamo l'oggetto math globale fornito da math.js
+            const result = math.evaluate(problem);
+            return result.toString();
+        } catch (error) {
+            return "Errore: Input non valido";
         }
     }
 
@@ -23,15 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p><strong>Risultato:</strong> ${result}</p>
             </div>
         `;
-        placeholder.style.display = 'none';
     }
 
     function handleInput() {
         const problem = input.value.trim();
         if (problem) {
             placeholder.style.display = 'block';
-            const result = solveProblem(problem);
+            const result = solveMathProblem(problem);
             displayResult(problem, result);
+            input.value = '';
         }
     }
 
@@ -41,6 +39,4 @@ document.addEventListener('DOMContentLoaded', () => {
             handleInput();
         }
     });
-
-    console.log("Script caricato e in esecuzione");
 });
