@@ -1,21 +1,24 @@
+// Attende che il DOM sia completamente caricato prima di eseguire il codice
 document.addEventListener('DOMContentLoaded', () => {
+    // Seleziona gli elementi del DOM necessari
     const input = document.querySelector('.input-wrapper input[type="text"]');
     const sendButton = document.querySelector('.input-wrapper button');
-    const boxContents = document.querySelector('.boxqui .box-contents');
-    const placeholder = document.querySelector('.faiqui');
+    const resultDisplay = document.querySelector('.boxqui .box-contents');
+    const loadingPlaceholder = document.querySelector('.faiqui');
 
+    // Funzione per risolvere il problema matematico
     function solveMathProblem(problem) {
         try {
-            // Utilizziamo l'oggetto math globale fornito da math.js
-            const result = math.evaluate(problem);
-            return result.toString();
+            // Usa math.js per valutare l'espressione matematica
+            return math.evaluate(problem).toString();
         } catch (error) {
             return "Errore: Input non valido";
         }
     }
 
+    // Funzione per mostrare il risultato
     function displayResult(problem, result) {
-        boxContents.innerHTML = `
+        resultDisplay.innerHTML = `
             <div style="padding: 20px; font-size: 18px;">
                 <p><strong>Problema:</strong> ${problem}</p>
                 <p><strong>Risultato:</strong> ${result}</p>
@@ -23,20 +26,22 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    function handleInput() {
+    // Funzione principale per gestire l'input dell'utente
+    function handleUserInput() {
         const problem = input.value.trim();
         if (problem) {
-            placeholder.style.display = 'block';
+            loadingPlaceholder.style.display = 'block';  // Mostra il placeholder di caricamento
             const result = solveMathProblem(problem);
             displayResult(problem, result);
-            input.value = '';
+            input.value = '';  // Pulisce il campo di input
         }
     }
 
-    sendButton.addEventListener('click', handleInput);
+    // Aggiunge gli event listener
+    sendButton.addEventListener('click', handleUserInput);
     input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            handleInput();
+            handleUserInput();
         }
     });
 });
