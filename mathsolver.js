@@ -6,33 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    // Aggiungiamo le costanti a math.js
     Object.entries(constants).forEach(([key, value]) => {
         math.evaluate(`${key} = ${value}`);
     });
 
-    // Funzioni fisiche e chimiche personalizzate
-    const customFunctions = {
-        energia_cinetica: (massa, velocita) => 0.5 * massa * Math.pow(velocita, 2),
-        energia_potenziale: (massa, altezza, g = constants.g) => massa * g * altezza,
-        forza: (massa, accelerazione) => massa * accelerazione,
-        pressione: (forza, area) => forza / area,
-        densita: (massa, volume) => massa / volume,
-        molarita: (moli, volume_litri) => moli / volume_litri,
-        pH: (concentrazione_H) => -Math.log10(concentrazione_H),
-    };
-
-    // Aggiungiamo le funzioni personalizzate a math.js
-    Object.entries(customFunctions).forEach(([name, func]) => {
-        math.import({ [name]: func }, { override: true });
-    });
-
-    function solveProblem(problem) {
-        try {
-            // Utilizziamo l'oggetto math globale fornito da math.js
-            const result = math.evaluate(problem);
-            return result.toString();
-        } catch (error) {
+    catch (error) {
             console.error("Errore durante la risoluzione:", error);
             return "Errore: Input non valido o funzione non riconosciuta";
         }
